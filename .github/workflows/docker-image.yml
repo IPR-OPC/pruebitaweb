@@ -1,0 +1,34 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+env:
+  IMAGE_NAME: testdemoazuraweb
+  
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Log into registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{secrets.ACR_ENDPOINT}}
+        username: ${{secrets.ACR_USERNAME}}
+        password: ${{secrets.ACR_PASSWORD}}
+#     - name: Build the Docker image
+#       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build & Push
+      uses: docker/build-push-action@v2
+      with:
+        file: ./pruebitaweb/Dockerfile
+        push: true
+        build-args: |
+          version=$(date +%s)
+        tags: ${{secrets.ACR_ENDPOINT}}/${{env.IMAGE_NAME}}:latest
