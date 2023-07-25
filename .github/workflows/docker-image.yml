@@ -27,7 +27,7 @@ jobs:
     - name: Build & Push
       uses: docker/build-push-action@v2
       with:
-        file: ./pruebitaweb
+        file: ./pruebitaweb/Dockerfile
         push: true
         build-args: |
           version=$(date +%s)
