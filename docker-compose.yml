@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pruebitaweb:
+    image: ${DOCKER_REGISTRY-}pruebitaweb
+    build:
+      context: .
+      dockerfile: pruebitaweb/Dockerfile
